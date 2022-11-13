@@ -9,4 +9,6 @@ class Plate:
         self.preparationTime = preparationTime
         self.plateType = plateType
 
+
+
         
