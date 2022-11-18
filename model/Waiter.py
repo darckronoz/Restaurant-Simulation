@@ -13,16 +13,16 @@ class Waiter:
 
     #this function assigns customers to tables and if all the tables are full
     #then adds the customer to the tableQueue
-    def assignTable(self, customer, tableQueue):
+    def assignTable(self, customers, tableQueue):
         table = self.findEmptyTable()
         if table != False:
-            self.tables[table].addCustomer(customer)
+            self.tables[table].addCustomer(customers)
         else:
-            table = self.findTableToShare(customer.getSize())
+            table = self.findTableToShare(customers.getSize())
             if table != False:
-                self.tables[table].addCustomer(customer)
+                self.tables[table].addCustomer(customers)
             else:
-                tableQueue.push(customer)
+                tableQueue.push(customers)
     
     #Function that returns the first empty table on the table list (self.tables)
     #if there's not empty tables returns False.
