@@ -10,5 +10,7 @@ class Customer:
         self.plate_score = plate_score
         self.waiter_score = waiter_score
 
+    
+
 
         
