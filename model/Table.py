@@ -3,9 +3,9 @@ class Table:
 
     capacity = 5
 
-    def __init__(self, state, table_id, clients):
+    def __init__(self, state, table_id, customers):
         self.state = state
         self.table_id = table_id
-        self.clients = clients
+        self.customers = customers
 
 
