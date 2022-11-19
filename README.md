@@ -3,15 +3,15 @@
 python based simulation project with educational pourposes
 
 # TO - DO
-
+ - [ ] define the event 'customer leaves the table'
  - [x] rename Client to Customer.
  - [x] rename ClientGroup to CustomerGroup.
  - [ ] develop module functions.
 	- [ ] Table.
-		- [ ] addCustomer().
-		- [ ] isEmpty().
-		- [ ] isShareable().
-		- [ ] getFreeSeats().
+		- [x] addCustomer().
+		- [x] isEmpty().
+		- [x] isShareable().
+		- [x] getFreeSeats().
 	- [ ] Waiter.
 		- [x] assignTable().
 		- [x] findEmptyTable().
