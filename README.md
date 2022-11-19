@@ -11,7 +11,7 @@ python based simulation project with educational pourposes
 		- [x] addCustomer().
 		- [x] isEmpty().
 		- [x] isShareable().
-		- [x] getFreeSeats().
+		- [ ] getFreeSeats().
 	- [ ] Waiter.
 		- [x] assignTable().
 		- [x] findEmptyTable().
