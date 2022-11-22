@@ -4,32 +4,40 @@ class Customer:
 
     #El cliente cuenta con un Id, Propina, compartir mesa, capacidad, pedido, puntaje del plato y puntaje del mesero
 
-    def __init__(self, customer_id, tip, share_table, capacity, order, plate_score, waiter_score ):
-        self.customer_id = customer_id
-        self.tip = tip
-        self.share_table = share_table
-        self.capacity = capacity
-        self.order = order
-        self.plate_score = plate_score
-        self.waiter_score = waiter_score
+    def __init__(self, customer_id, tip, capacity, order, waiter_score ):
+        self._customer_id = customer_id
+        self._tip = tip
+        self._capacity = capacity
+        self._order = order
+        self._waiter_score = waiter_score
 
 
-    def addOrder(self, order):
-        if self.isEmpty:
-            self.customers = np.array(customers)
-            self.capacity -= len(customers)
-            self.setShareable()
-        else:
-            self.customers = np.concatenate((self.customers, customers))
-            self.capacity -= len(customers)
-            self.shareable = False
+    def _get_customer_id(self):
+        return self._customer_id
+
+    def _get_tip(self):
+        return self._tip
+
+    def _get_capacity(self):
+        return self._capacity
+
+    def _get_order(self):
+        return self._order
+
+    def _get_waiter_score(self):
+        return self._waiter_score
 
 
-    #function that returns True if the customers array is empty
-    def isEmpty(self):
-        if len(self.customers) <= 0:
-            return True
-        return False
+    customerId=property(fget=_get_customer_id)
+    tip=property(fget=_get_tip)
+    capacity=property(fget=_get_capacity)
+    order=property(fget=_get_order)
+    waiterScore=property(fget=_get_waiter_score)
+
+
+
+
+
 
 
 

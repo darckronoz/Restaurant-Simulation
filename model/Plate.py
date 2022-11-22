@@ -1,20 +1,42 @@
+from model.PlateTypeEnum import PlateTypeEnum
+
 
 class Plate:
 
-    def __init__(self, plateType, preparationTime, price, quality, score, eating_time):
-        self.eating_time = eating_time
-        self.score = score
-        self.quality = quality
-        self.price = price
-        self.preparationTime = preparationTime
-        self.plateType = plateType
+    def __init__(self, plate_name, preparationTime, price, score, eating_time,plate_type):
+        self._plate_name=plate_name
+        self._eating_time = eating_time
+        self._score = score
+        self._price = price
+        self._preparation_time = preparationTime
+        self._plate_type=plate_type
 
-    def _get_plates(self):
-        return self._plates
+    def _get_eating_time(self):
+        return self._eating_time
 
-    def _set_plates(self, plates):
-        self._plates=plates
+    def _get_name(self):
+        return self._plate_name
 
-    plates = property(fset=_set_plates, fget=_get_plates)
+    def _get_score(self):
+        return self._score
 
-        
+    def _get_price(self):
+        return self._price
+
+    def _get_preparation_time(self):
+        return self._preparation_time
+
+    def _get_plate_type(self):
+        return self._plate_type
+
+    eatingTime=property(fget=_get_eating_time)
+    name=property(fget=_get_name)
+    score=property(fget=_get_score)
+    price=property(fget=_get_price)
+    preparationTime=property(fget=_get_preparation_time)
+    plateType=property(fget=_get_plate_type)
+
+
+type=PlateTypeEnum(1)
+plate= Plate("Churrasco", 5, 20, 2, 4,type)
+print(plate.plateType.name)
