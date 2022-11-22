@@ -14,7 +14,22 @@ class Customer:
         self.waiter_score = waiter_score
 
 
+    def addOrder(self, order):
+        if self.isEmpty:
+            self.customers = np.array(customers)
+            self.capacity -= len(customers)
+            self.setShareable()
+        else:
+            self.customers = np.concatenate((self.customers, customers))
+            self.capacity -= len(customers)
+            self.shareable = False
 
+
+    #function that returns True if the customers array is empty
+    def isEmpty(self):
+        if len(self.customers) <= 0:
+            return True
+        return False
 
 
 
