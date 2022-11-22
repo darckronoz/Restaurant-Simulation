@@ -1,14 +1,17 @@
 import numpy as np
 
+from model.Order import Order
+
+
 class Customer:
 
     #El cliente cuenta con un Id, Propina, compartir mesa, capacidad, pedido, puntaje del plato y puntaje del mesero
 
-    def __init__(self, customer_id, tip, capacity, order, waiter_score ):
+    def __init__(self, customer_id, tip, capacity,  waiter_score ):
         self._customer_id = customer_id
         self._tip = tip
         self._capacity = capacity
-        self._order = order
+        self._order=None
         self._waiter_score = waiter_score
 
 
@@ -21,20 +24,31 @@ class Customer:
     def _get_capacity(self):
         return self._capacity
 
-    def _get_order(self):
-        return self._order
-
     def _get_waiter_score(self):
         return self._waiter_score
 
 
+# Metodo para añadir orden a un cliente, no se coloca en los parametros del constructor,
+# porque no se crea al crear un cliente, sino solo hasta que se sienta a la mesa, despues de eso si se pasa,
+# por medio de este metodo
+    def _add_order(self, order):
+        self._order=order
+
+    def _get_order(self):
+        return self._order
+
+
+#Se maneja bajo build properties, para llamar los getters y setters
     customerId=property(fget=_get_customer_id)
     tip=property(fget=_get_tip)
     capacity=property(fget=_get_capacity)
-    order=property(fget=_get_order)
     waiterScore=property(fget=_get_waiter_score)
+    order= property(fget=_get_order, fset=_add_order)
 
-
+cu=Customer(1,2,3,4)
+ore=Order(1,2)
+cu.order=ore
+print(cu.order.plates)
 
 
 
