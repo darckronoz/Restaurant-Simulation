@@ -38,7 +38,7 @@ class Waiter:
     #returns False
     def findTableToShare(self, groupLenght):
         for table in self.tables:
-            if table.isShareable(): 
+            if table.shareable: 
                 if table.getFreeSeats() <= groupLenght:
                     return table.id
         return False
