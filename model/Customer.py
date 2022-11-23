@@ -7,12 +7,12 @@ class Customer:
 
     #El cliente cuenta con un Id, Propina, compartir mesa, capacidad, pedido, puntaje del plato y puntaje del mesero
 
-    def __init__(self, customer_id, tip, capacity,  waiter_score ):
+    def __init__(self, customer_id, tip, capacity ):
         self._customer_id = customer_id
         self._tip = tip
         self._capacity = capacity
         self._order=None
-        self._waiter_score = waiter_score
+        self._waiter_score = None
 
 
     def _get_customer_id(self):
@@ -23,6 +23,9 @@ class Customer:
 
     def _get_capacity(self):
         return self._capacity
+
+    def _add_waiter_score(self, waiter_score):
+         self._waiter_score=waiter_score
 
     def _get_waiter_score(self):
         return self._waiter_score
@@ -42,13 +45,13 @@ class Customer:
     customerId=property(fget=_get_customer_id)
     tip=property(fget=_get_tip)
     capacity=property(fget=_get_capacity)
-    waiterScore=property(fget=_get_waiter_score)
+    waiterScore=property(fget=_get_waiter_score, fset=_add_waiter_score)
     order= property(fget=_get_order, fset=_add_order)
 
-cu=Customer(1,2,3,4)
-ore=Order(1,2)
-cu.order=ore
-print(cu.order.plates)
+# cu=Customer(1,2,3)
+# ore=Order(1,2)
+# cu.order=ore
+# print(cu.order.plates)
 
 
 

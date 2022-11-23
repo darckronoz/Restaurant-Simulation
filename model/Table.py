@@ -59,7 +59,9 @@ class Table:
             if trueCounter > n/2:
                 return True
         return False
-            
+
+    def mostrar(self):
+        return self.customers
 
 
 
