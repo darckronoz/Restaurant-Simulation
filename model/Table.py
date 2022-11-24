@@ -3,7 +3,7 @@ class Table:
 
     capacity = 5
     shareable = False
-    customers = np.array
+    customers = None
 
     #customers: array of customers.
     def __init__(self, state, table_id):

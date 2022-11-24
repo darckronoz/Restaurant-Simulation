@@ -5,9 +5,9 @@ import numpy as np
 
 #importing and creating object test
 #cocina = k(name='cocina 1')#
-from model.Customer import Customer
-from model.CustomerGroup import CustomerGroup
-from model.Table import Table
+from Customer import Customer
+from CustomerGroup import CustomerGroup
+from Table import Table
 
 customerList=[]
 for i in range (ran.randint(1,5)):
