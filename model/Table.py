@@ -1,9 +1,13 @@
 import numpy as np
+
+from model.Customer import Customer
+
+
 class Table:
 
     capacity = 5
     shareable = False
-    customers = np.array
+    customers = None
 
     #customers: array of customers.
     def __init__(self, state, table_id):
@@ -23,11 +27,11 @@ class Table:
     def addCustomer(self, customers):
         if self.isEmpty:
             self.customers = np.array(customers)
-            self.capacity -= len(customers)
+            self.capacity -= self.customers.size
             self.setShareable()
         else:
             self.customers = np.concatenate((self.customers, customers))
-            self.capacity -= len(customers)
+            self.capacity -= self.customers.size
             self.shareable = False
 
 
@@ -47,10 +51,11 @@ class Table:
     #if the majority agrees not to share returns false
     #if it is even returns true.
     def setShareable(self):
-        n = len(self.customers)
+        n = self.customers.size
         trueCounter = 0
-        for customer in self.customers:
-            if customer.share_table:
+        for i in range(self.customers.size):
+
+            if self.customers[i]._share_table:
                 trueCounter += 1
         if n == 2 or n == 4:
                 if trueCounter >= n/2:
@@ -61,8 +66,8 @@ class Table:
         return False
 
     def mostrar(self):
-        return self.customers
-
-
-
+        var=""
+        for i in range(self.customers.size):
+            var=var,  "  Customer "+str(self.customers[i].customerId)
+        return var
 
