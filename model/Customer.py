@@ -6,12 +6,13 @@ class Customer:
 
     #El cliente cuenta con un Id, Propina, compartir mesa, capacidad, pedido, puntaje del plato y puntaje del mesero
 
-    def __init__(self, customer_id, tip, capacity ):
+    def __init__(self, customer_id, tip, capacity, share):
         self._customer_id = customer_id
         self._tip = tip
         self._capacity = capacity
         self._order=None
         self._waiter_score = None
+        self._share_table = share
 
 
     def _get_customer_id(self):

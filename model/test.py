@@ -12,18 +12,21 @@ from Table import Table
 customerList=[]
 for i in range (ran.randint(1,5)):
    tip=ran.randint(0,1)
+   share = 0
    if tip==1:
       tip=True
+      share = False
    else:
       tip=False
+      share = True
    # print(tip)
-   customer=Customer(1,tip, 4 )
+   customer=Customer(1,tip, 4, share)
    customerList.append(customer)
 
 customerGroup=CustomerGroup(customerList, ran.randint(1,3),ran.randint(1,3))
-# mesa=Table(False, 1)
-# mesa.addCustomer(customerGroup)
-# print(mesa.mostrar())
+mesa=Table(False, 1)
+mesa.addCustomer(customerGroup._get_customer())
+print(mesa.mostrar())
 
 
 
@@ -35,7 +38,6 @@ j = [lol, lol1, lol2]
 
 k = np.array(j)
 
-print(k)
 
 
 

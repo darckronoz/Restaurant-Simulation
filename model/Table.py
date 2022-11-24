@@ -23,11 +23,11 @@ class Table:
     def addCustomer(self, customers):
         if self.isEmpty:
             self.customers = np.array(customers)
-            self.capacity -= len(customers)
+            self.capacity -= self.customers.size
             self.setShareable()
         else:
             self.customers = np.concatenate((self.customers, customers))
-            self.capacity -= len(customers)
+            self.capacity -= self.customers.size
             self.shareable = False
 
 
@@ -47,10 +47,10 @@ class Table:
     #if the majority agrees not to share returns false
     #if it is even returns true.
     def setShareable(self):
-        n = len(self.customers)
+        n = self.customers.size
         trueCounter = 0
-        for customer in self.customers:
-            if customer.share_table:
+        for i in range(self.customers.size):
+            if self.customers[i]._share_table:
                 trueCounter += 1
         if n == 2 or n == 4:
                 if trueCounter >= n/2:
