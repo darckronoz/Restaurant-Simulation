@@ -1,4 +1,3 @@
-import numpy as np
 
 from model.Order import Order
 
