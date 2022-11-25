@@ -44,7 +44,7 @@ customerGroup=CustomerGroup(customerList, ran.randint(1,3),ran.randint(1,3))
 
 mesa=Table(False, 1)
 mesa.addCustomer(customerGroup)
-print("ID cliente", mesa.mostrar())
+print("ID cliente", mesa.show())
 
 
 

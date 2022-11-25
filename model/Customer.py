@@ -42,7 +42,7 @@ class Customer:
 
 
 #Se maneja bajo build properties, para llamar los getters y setters
-    customerId=property(fget=_get_customer_id)
+    customer_id=property(fget=_get_customer_id)
     tip=property(fget=_get_tip)
     capacity=property(fget=_get_capacity)
     waiterScore=property(fget=_get_waiter_score, fset=_add_waiter_score)

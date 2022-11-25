@@ -1,13 +1,13 @@
 import numpy as np
 
-from model.Customer import Customer
-from model.CustomerGroup import CustomerGroup
+from Customer import Customer
+from CustomerGroup import CustomerGroup
 
 
 class Table:
 
     capacity = 5
-    customersGroupList = None
+    customersGroupList = []
 
     #customers: array of customers.
     def __init__(self, state, table_id):
@@ -26,8 +26,9 @@ class Table:
     #update the capacity and set Shareable to False so it cant be shared again.
     def addCustomer(self, customGroup):
         if self.isEmpty:
-            self.customersGroupList = np.array(customGroup)
-            print(self.customersGroupList[0].customer)
+            self.customersGroupList.append(customGroup)
+            self.customersGroupList = np.array(self.customersGroupList)
+            print(self.customersGroupList[0].customer[0].customer_id)
             self.capacity -= len(self.customersGroupList[0].customer)
         elif self.setShareable and self.customersGroupList.size <2 and self.capacity >=len(customGroup.customer):
             self.customersGroupList = np.concatenate((self.customersGroupList, customGroup))
@@ -57,9 +58,10 @@ class Table:
                 return True
             return False
 
-    def mostrar(self):
+    def show(self):
         var=""
         for i in range(self.customersGroupList.size):
-            var=var,  "  Customer "+str(self.customersGroupList[i].customer.customerId)
+            for n in self.customersGroupList[i].customer:
+                print('id:', n.customer_id)
         return var
 
