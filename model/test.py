@@ -5,9 +5,6 @@ from Order import Order as o
 
 import numpy as np
 
-from Kitchen import Kitchen as k
-
-
 #importing and creating object test
 #cocina = k(name='cocina 1')#
 from Customer import Customer
