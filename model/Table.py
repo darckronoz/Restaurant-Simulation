@@ -1,9 +1,13 @@
 import numpy as np
+
+from Customer import Customer
+from CustomerGroup import CustomerGroup
+
+
 class Table:
 
     capacity = 5
-    shareable = False
-    customers = None
+    customersGroupList = []
 
     #customers: array of customers.
     def __init__(self, state, table_id):
@@ -20,22 +24,20 @@ class Table:
     #and if the table is shareable
     #then it'll concatenate the self.customers array with the array to share with
     #update the capacity and set Shareable to False so it cant be shared again.
-    def addCustomer(self, customers):
+    def addCustomer(self, customGroup):
         if self.isEmpty:
-            self.customers = np.array(customers)
-            self.capacity -= self.customers.size
-            self.setShareable()
-        else:
-            self.customers = np.concatenate((self.customers, customers))
-            self.capacity -= self.customers.size
-            self.shareable = False
+            self.customersGroupList.append(customGroup)
+            self.customersGroupList = np.array(self.customersGroupList)
+            print(self.customersGroupList[0].customer[0].customer_id)
+            self.capacity -= len(self.customersGroupList[0].customer)
+        elif self.setShareable and self.customersGroupList.size <2 and self.capacity >=len(customGroup.customer):
+            self.customersGroupList = np.concatenate((self.customersGroupList, customGroup))
+            self.capacity -= self.customersGroupList[1].customer.size
 
 
     #function that returns True if the customers array is empty
     def isEmpty(self):
-        if len(self.customers) <= 0:
-            return True
-        return False
+        return len(self.customersGroupList) == 0
 
     #TO DO:
     #when there is an even number of customers on the table 
@@ -47,22 +49,19 @@ class Table:
     #if the majority agrees not to share returns false
     #if it is even returns true.
     def setShareable(self):
-        n = self.customers.size
         trueCounter = 0
-        for i in range(self.customers.size):
-            if self.customers[i]._share_table:
+        for i in range(self.customersGroupList[0].customer.size):
+            if self.customersGroupList[i]._share_table:
                 trueCounter += 1
-        if n == 2 or n == 4:
-                if trueCounter >= n/2:
-                    return True
-        else:
-            if trueCounter > n/2:
+            falses=self.customersGroupList.size-trueCounter
+            if trueCounter>=falses:
                 return True
-        return False
+            return False
 
-    def mostrar(self):
-        return self.customers
-
-
-
+    def show(self):
+        var=""
+        for i in range(self.customersGroupList.size):
+            for n in self.customersGroupList[i].customer:
+                print('id:', n.customer_id)
+        return var
 
