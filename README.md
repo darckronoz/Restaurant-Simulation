@@ -4,6 +4,16 @@ python based simulation project with educational pourposes
 
 # TO - DO
  - [ ] define the event 'customer leaves the table'
+ - [ ] Utilities
+	- [ ] Margen de error chefs.
+	- [ ] Distribución de llegadas customers.
+	- [ ] Pago de propinas.
+	- [ ] Compartir mesas.
+	- [ ] Modulo Generación de Graficas.
+		- [ ] Grafica 1.
+		- [ ] Grafica 2.
+		- [ ] Grafica 3.
+		- [ ] Grafica 4.
  - [x] rename Client to Customer.
  - [x] rename ClientGroup to CustomerGroup.
  - [ ] develop module functions.

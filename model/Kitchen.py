@@ -1,7 +1,7 @@
 
 class Kitchen:
     #delete name parameter.
-    def __init__(self, name, chefs, freezer):
+    #chefs manager.
+    def __init__(self, chefs, freezer):
         self.chefs = chefs
         self.freezer = freezer
-        self.name = name
