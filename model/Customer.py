@@ -48,7 +48,7 @@ class Customer:
     waiterScore=property(fget=_get_waiter_score, fset=_add_waiter_score)
     order= property(fget=_get_order, fset=_add_order)
 
-# cu=Customer(1,2,3)
+# cu=Customer(1,2,3,1)
 # ore=Order(1,2)
 # cu.order=ore
 # print(cu.order.plates)

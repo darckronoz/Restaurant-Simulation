@@ -9,7 +9,7 @@ class Plate:
         self._score = score
         self._price = price
         self._preparation_time = preparationTime
-        self._plate_type=plate_type
+        self._plate_type=PlateTypeEnum(plate_type)
 
     def _get_eating_time(self):
         return self._eating_time
@@ -37,6 +37,5 @@ class Plate:
     plateType=property(fget=_get_plate_type)
 
 
-type=PlateTypeEnum(1)
-plate= Plate("Churrasco", 5, 20, 2, 4,type)
+plate= Plate("Churrasco", 5, 20, 2, 4,1)
 print(plate.plateType.name)

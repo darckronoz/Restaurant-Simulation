@@ -5,7 +5,7 @@ class Order:
 
     def __init__(self, id_order, plates):
         # self._var = ""
-        self._plates = np.array(plates)
+        self._plates = [plates]
         self._id_order=id_order
 
     def _get_id_order(self):
