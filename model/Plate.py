@@ -38,4 +38,4 @@ class Plate:
 
 
 plate= Plate("Churrasco", 5, 20, 2, 4,1)
-print(plate.plateType.name)
+# print(plate.plateType.name)
