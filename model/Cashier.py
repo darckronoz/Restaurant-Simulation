@@ -22,6 +22,9 @@ class Cashier:
         return self._clientGroupQueue[0].totalPriceGroup
 
 
+    def totalPay(self):
+        self._totalPay+=self.payBill()
+        print("Total ", self._totalPay)
 
     # def showCashier(self):
     #     for i in range (len(self._clientGroupQueue)):

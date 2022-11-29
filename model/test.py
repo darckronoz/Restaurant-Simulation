@@ -76,7 +76,8 @@ for i in range(len(customerGroup.customer)):
 
 cashier= Cashier()
 cashier.addClientGropQueue(customerGroup)
-print("Total", cashier.payBill())
+# print("Total", cashier.payBill())
+cashier.totalPay()
 
 # mesa=Table(False, 1)
 # mesa.addCustomer(customerGroup)
