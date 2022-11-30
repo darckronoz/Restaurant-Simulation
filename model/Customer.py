@@ -1,5 +1,5 @@
 
-from Order import Order
+#from Order import Order
 
 
 class Customer:
@@ -58,4 +58,3 @@ class Customer:
 
 
 
-        
