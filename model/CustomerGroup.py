@@ -11,6 +11,7 @@ class CustomerGroup:
         self._customers =customers
         self._paymentType=PaymentTypeEnum(paymentType)
         self._paymentMode=PaymentModeEnum(paymentMode)
+        self._total_price_orderGroup=0
 
     def _get_customer(self):
         return self._customers
@@ -24,6 +25,10 @@ class CustomerGroup:
     def _service_time(self):
         return "Fabuchitor"
 
+    def _get_total_price_order_group(self):
+        for i in range(len(self._customers)):
+            self._total_price_orderGroup+=self._customers[i].order.get_total_order()
+        return self._total_price_orderGroup
 
 
 
@@ -31,6 +36,7 @@ class CustomerGroup:
     paymentType=property(fget=_get_paymentType)
     paymentMode=property(fget=_get_paymentMode)
     serviceTime=property(fget=_service_time)
+    totalPriceGroup=property(fget=_get_total_price_order_group)
 
 
 # r=CustomerGroup("fe","sef","sf")

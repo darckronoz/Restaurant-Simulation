@@ -1,5 +1,11 @@
 import numpy as np
 
+from Customer import Customer
+from CustomerGroup import CustomerGroup
+
+from model.Order import Order
+
+
 class Table:
 
     capacity = 5
@@ -21,19 +27,25 @@ class Table:
     #then it'll concatenate the self.customers array with the array to share with
     #update the capacity and set Shareable to False so it cant be shared again.
     def addCustomer(self, customGroup):
-        if self.isEmpty:
+        if self.isEmpty():
             self.customersGroupList.append(customGroup)
             self.customersGroupList = np.array(self.customersGroupList)
             print(self.customersGroupList[0].customer[0].customer_id)
             self.capacity -= len(self.customersGroupList[0].customer)
         elif self.setShareable and self.customersGroupList.size <2 and self.capacity >=len(customGroup.customer):
-            self.customersGroupList = np.concatenate((self.customersGroupList, customGroup))
+            # self.customersGroupList=np.array(customGroup)
+            self.customersGroupList.append(customGroup)
+            self.customersGroupList = np.array(self.customersGroupList)
             self.capacity -= self.customersGroupList[1].customer.size
 
 
     #function that returns True if the customers array is empty
     def isEmpty(self):
         return len(self.customersGroupList) == 0
+
+    def addOrder(self, order):
+        for n in self.customersGroupList[0].customer:
+            n.order=order
 
     #TO DO:
     #when there is an even number of customers on the table 
@@ -55,9 +67,8 @@ class Table:
             return False
 
     def show(self):
-        var=""
         for i in range(self.customersGroupList.size):
             for n in self.customersGroupList[i].customer:
                 print('id:', n.customer_id)
-        return var
+
 
