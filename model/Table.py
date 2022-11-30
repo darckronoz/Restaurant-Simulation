@@ -1,9 +1,5 @@
 import numpy as np
 
-from Customer import Customer
-from CustomerGroup import CustomerGroup
-
-
 class Table:
 
     capacity = 5

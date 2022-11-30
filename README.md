@@ -28,5 +28,12 @@ python based simulation project with educational pourposes
 		- [x] findShareableTable().
 	- [ ] CustomerGroup().
 		- [x] getSize().
- - [ ] structure the restaurant (controller).
+ - [x] structure the restaurant (controller).
+	- [x] base del restaurante
+	- [ ] comenzar con los eventos
+		- [ ] llega un cliente
+		- [ ] preparación de plato
+		- [ ] plato a la mesa/cliente come
+		- [ ] cliente paga
+		- [ ] cliente se va
  - [ ] develop the data structures queue.
