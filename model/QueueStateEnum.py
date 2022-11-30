@@ -1,6 +1,6 @@
 from enum import Enum
 
-#Tipos de pago
+#Estados en cola
 class QueueStateEnum (Enum):
     Vacio = 0
     En_Cola = 1

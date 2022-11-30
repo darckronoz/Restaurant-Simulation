@@ -15,6 +15,7 @@ from model.Cashier import Cashier
 from model.Order import Order
 from model.Plate import Plate
 
+
 plate= Plate("Churrasco", 5, 15, 80, 4,1)
 plateTwo= Plate("Bistec a Caballo", 5, 10, 2, 4,2)
 plateThree= Plate("Frijoles con Cayo", 5, 5, 2, 4,1)
@@ -52,11 +53,78 @@ for i in range(len(customerGroupList)):
       customerGroupList[i].order=order3
 customerGroup=CustomerGroup(customerGroupList, ran.randint(1, 3), ran.randint(1, 3))
 customerGroup2=CustomerGroup(customerGroupList, ran.randint(1, 3), ran.randint(1, 3))
+customerGroup3=CustomerGroup(customerGroupList, ran.randint(1, 3), ran.randint(1, 3))
+customerGroup4=CustomerGroup(customerGroupList, ran.randint(1, 3), ran.randint(1, 3))
 
+
+# Muestra informacion
 for i in range(len(customerGroup.customer)):
    print(customerGroup.customer[i].customer_id)
    for j in range(len(customerGroup.customer[i].order.plates)):
       print(customerGroup.customer[i].order.plates[j].name)
+
+
+
+
+cashier= Cashier()
+
+cashier.addClientGropQueue(customerGroup)
+cashier.addClientGropQueue(customerGroup2)
+cashier.addClientGropQueue(customerGroup3)
+cashier.addClientGropQueue(customerGroup4)
+
+cashier.start()
+# cashier.totalPay()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # listaPrueba=np.array(customerGroup)
@@ -72,12 +140,6 @@ for i in range(len(customerGroup.customer)):
 # mesa.addCustomer(customerGroup)
 # print(mesa.mostrar())
 #print("ff")
-
-
-cashier= Cashier()
-cashier.addClientGropQueue(customerGroup)
-# print("Total", cashier.payBill())
-cashier.totalPay()
 
 # mesa=Table(False, 1)
 # mesa.addCustomer(customerGroup)
