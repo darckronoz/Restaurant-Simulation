@@ -1,9 +1,11 @@
 #imports.
 
+import random as r
+
 from model.Cashier import Cashier
 from model.Chef import Chef
-#from model.Customer import Customer
-#from model.CustomerGroup import CustomerGroup
+from model.Customer import Customer
+from model.CustomerGroup import CustomerGroup
 from model.Kitchen import Kitchen
 #from model.Order import Order
 #from model.Plate import Plate
@@ -15,6 +17,7 @@ from model.Waiter import Waiter
 from utilities.Utilities import *
 
 #init restaurant
+#restaurant waiting queue. [ ]
 #create objects. [x]
 #1 Cashier [x]
 #3 Chefs [x]
@@ -22,7 +25,7 @@ from utilities.Utilities import *
 #4 Waiters [x]
 #20 Tables [x]
 cashier_queue = []
-cashier = Cashier(False, cashier_queue)
+cashier = Cashier()
 
 #chefs.
 margin_error_chef = [0, 0, 0] #fill with the function margin error in Utilities
@@ -50,5 +53,28 @@ cleanTimes = [0, 0, 0, 0]
 serviceTimes = [0, 0, 0, 0]
 for i in range(4):
     waiters.append(Waiter(i+1, False, orderTimes[i], cleanTimes[i], serviceTimes[i], tables, 0, 0))
+
+
+# <-provisional customer group creation.
+customer_number = r.randint(1, 5)
+customers = []
+for i in range(customer_number):
+    customers.append(Customer(i, False, 3, True))
+group = CustomerGroup(customers, r.randint(1, 3), r.randint(1, 3))
+# end provisional customer group creation.->
+
+# customer arrives
+# TO DO: Arrival customer distribution *Utilities*
+
+# def customer_arrives():
+# TO DO
+# queue of task for the waiter
+#
+
+
+
+
+
+
 
 

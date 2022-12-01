@@ -1,9 +1,9 @@
 import numpy as np
 
-from Customer import Customer
-from CustomerGroup import CustomerGroup
+#from Customer import Customer
+#from CustomerGroup import CustomerGroup
 
-from model.Order import Order
+#from model.Order import Order
 
 
 class Table:
