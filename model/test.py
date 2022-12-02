@@ -7,9 +7,9 @@ import numpy as np
 
 #importing and creating object test
 #cocina = k(name='cocina 1')#
-from Customer import Customer
-from CustomerGroup import CustomerGroup
-from Table import Table
+from model.Customer import Customer
+from model.CustomerGroup import CustomerGroup
+from model.Table import Table
 
 from model.Cashier import Cashier
 from model.Order import Order
@@ -28,7 +28,17 @@ order2=Order(2,plateList2)
 order3=Order(3,plateList3)
 
 
+# Creacion de mesas
+mesasList=[]
+for i in range(20):
+   mesasList.append(Table(i+1))
 
+
+
+
+
+
+# Creacion listas con clientes
 customerGroupList=[]
 for i in range (ran.randint(1,5)):
    tip=ran.randint(0,1)
@@ -43,6 +53,23 @@ for i in range (ran.randint(1,5)):
    customer=Customer(ran.randint(1,1000),tip, 4, share)
    customerGroupList.append(customer)
 
+
+# Creacion de grupos
+customerGroup = CustomerGroup(1, customerGroupList, ran.randint(1, 3), ran.randint(1, 3))
+customerGroup2 = CustomerGroup(2, customerGroupList, ran.randint(1, 3), ran.randint(1, 3))
+customerGroup3 = CustomerGroup(3, customerGroupList, ran.randint(1, 3), ran.randint(1, 3))
+customerGroup4 = CustomerGroup(4, customerGroupList, ran.randint(1, 3), ran.randint(1, 3))
+
+# for i in range(len(mesasList)):
+#    if mesasList[i].tableAvailable() and (len(mesasList[i].customersGroupList[0].customer)+len(customerGroup.customer)<=5):
+
+mesasList[0].addCustomer(customerGroup)
+mesasList[0].addCustomer(customerGroup2)
+mesasList[0].show()
+
+print(mesasList[0].tableAvailable())
+
+
 for i in range(len(customerGroupList)):
    cuentaOrder=ran.randint(1,3)
    if cuentaOrder==1 :
@@ -51,10 +78,7 @@ for i in range(len(customerGroupList)):
       customerGroupList[i].order=order2
    else :
       customerGroupList[i].order=order3
-customerGroup=CustomerGroup(customerGroupList, ran.randint(1, 3), ran.randint(1, 3))
-customerGroup2=CustomerGroup(customerGroupList, ran.randint(1, 3), ran.randint(1, 3))
-customerGroup3=CustomerGroup(customerGroupList, ran.randint(1, 3), ran.randint(1, 3))
-customerGroup4=CustomerGroup(customerGroupList, ran.randint(1, 3), ran.randint(1, 3))
+
 
 
 # Muestra informacion

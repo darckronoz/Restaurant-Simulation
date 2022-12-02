@@ -29,12 +29,16 @@ class Plate:
     def _get_plate_type(self):
         return self._plate_type
 
+    def _get_total_time_service(self):
+        return self.eatingTime+self.preparationTime
+
     eatingTime=property(fget=_get_eating_time)
     name=property(fget=_get_name)
     score=property(fget=_get_score)
     price=property(fget=_get_price)
     preparationTime=property(fget=_get_preparation_time)
     plateType=property(fget=_get_plate_type)
+    timeService=property(fget=_get_total_time_service)
 
 
 plate= Plate("Churrasco", 5, 20, 2, 4,1)

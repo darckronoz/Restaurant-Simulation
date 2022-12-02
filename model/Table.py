@@ -9,11 +9,11 @@ from model.Order import Order
 class Table:
 
     capacity = 5
-    customersGroupList = []
 
     #customers: array of customers.
-    def __init__(self, state, table_id):
-        self.state = state
+    def __init__(self, table_id):
+        self.customersGroupList = []
+        self.state = True
         self.table_id = table_id
 
     #the restaurant only admits to share the table once
@@ -29,14 +29,11 @@ class Table:
     def addCustomer(self, customGroup):
         if self.isEmpty():
             self.customersGroupList.append(customGroup)
-            self.customersGroupList = np.array(self.customersGroupList)
             print(self.customersGroupList[0].customer[0].customer_id)
             self.capacity -= len(self.customersGroupList[0].customer)
-        elif self.setShareable and self.customersGroupList.size <2 and self.capacity >=len(customGroup.customer):
-            # self.customersGroupList=np.array(customGroup)
+        elif self.tableAvailable() and self.capacity >=len(customGroup.customer):
             self.customersGroupList.append(customGroup)
-            self.customersGroupList = np.array(self.customersGroupList)
-            self.capacity -= self.customersGroupList[1].customer.size
+            self.capacity -= len(self.customersGroupList[1].customer)
 
 
     #function that returns True if the customers array is empty
@@ -47,27 +44,28 @@ class Table:
         for n in self.customersGroupList[0].customer:
             n.order=order
 
-    #TO DO:
-    #when there is an even number of customers on the table 
-    #and half say yes and the other half say no to share the table,
-    #the restaurant will prioritize to share the table.
-
-    #this function gets the share parameter for each customer 
-    #then if the majority agrees to share then returns true
-    #if the majority agrees not to share returns false
-    #if it is even returns true.
     def setShareable(self):
         trueCounter = 0
-        for i in range(self.customersGroupList[0].customer.size):
-            if self.customersGroupList[i]._share_table:
+        for i in range(len(self.customersGroupList[0].customer)):
+            if self.customersGroupList[0].customer[i]._share_table:
                 trueCounter += 1
-            falses=self.customersGroupList.size-trueCounter
+            falses=len(self.customersGroupList)-trueCounter
             if trueCounter>=falses:
                 return True
             return False
 
+    def get_table_id(self):
+        return self.table_id
+
+    # Ver disponibilidad de la mesa
+    def tableAvailable(self):
+        return len(self.customersGroupList) < 2 and self.setShareable()
+
+
+
     def show(self):
-        for i in range(self.customersGroupList.size):
+        for i in range(len(self.customersGroupList)):
+            print(self.customersGroupList[i].idGroup)
             for n in self.customersGroupList[i].customer:
                 print('id:', n.customer_id)
 
