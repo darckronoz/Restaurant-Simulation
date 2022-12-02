@@ -29,13 +29,10 @@ class Table:
     def addCustomer(self, customGroup):
         if self.isEmpty():
             self.customersGroupList.append(customGroup)
-            self.customersGroupList = np.array(self.customersGroupList)
-            print(self.customersGroupList[0].customer[0].customer_id)
             self.capacity -= len(self.customersGroupList[0].customer)
-        elif self.setShareable and self.customersGroupList.size <2 and self.capacity >=len(customGroup.customer):
-            # self.customersGroupList=np.array(customGroup)
+            return True
+        elif self.setShareable and len(self.customersGroupList) < 2 and self.capacity >= len(customGroup.customer):
             self.customersGroupList.append(customGroup)
-            self.customersGroupList = np.array(self.customersGroupList)
             self.capacity -= self.customersGroupList[1].customer.size
 
 
