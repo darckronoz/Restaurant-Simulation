@@ -31,9 +31,12 @@ class Table:
             self.customersGroupList.append(customGroup)
             print(self.customersGroupList[0].customer[0].customer_id)
             self.capacity -= len(self.customersGroupList[0].customer)
+            return True
         elif self.tableAvailable() and self.capacity >=len(customGroup.customer):
             self.customersGroupList.append(customGroup)
             self.capacity -= len(self.customersGroupList[1].customer)
+            return True
+        return False
 
 
     #function that returns True if the customers array is empty

@@ -1,10 +1,5 @@
 import random as ran
 
-from Kitchen import Kitchen as k
-from Order import Order as o
-
-import numpy as np
-
 #importing and creating object test
 #cocina = k(name='cocina 1')#
 from model.Customer import Customer
@@ -60,12 +55,32 @@ customerGroup2 = CustomerGroup(2, customerGroupList, ran.randint(1, 3), ran.rand
 customerGroup3 = CustomerGroup(3, customerGroupList, ran.randint(1, 3), ran.randint(1, 3))
 customerGroup4 = CustomerGroup(4, customerGroupList, ran.randint(1, 3), ran.randint(1, 3))
 
-# for i in range(len(mesasList)):
-#    if mesasList[i].tableAvailable() and (len(mesasList[i].customersGroupList[0].customer)+len(customerGroup.customer)<=5):
+for i in range(len(mesasList)):
+   if mesasList[i].addCustomer(customerGroup):
+      print('Se añadío a la mesa ', mesasList[i].get_table_id())
+      break
+   else:
+      print("Se lleno la mesa ", mesasList[i].get_table_id())
 
-mesasList[0].addCustomer(customerGroup)
-mesasList[0].addCustomer(customerGroup2)
-mesasList[0].show()
+
+for i in range(len(mesasList)):
+   if mesasList[i].addCustomer(customerGroup):
+      print('Se añadío a la mesa ', mesasList[i].get_table_id())
+      break
+   else:
+      print("Se lleno la mesa ", mesasList[i].get_table_id())
+
+for i in range(len(mesasList)):
+   if mesasList[i].addCustomer(customerGroup):
+      print('Se añadío a la mesa ', mesasList[i].get_table_id())
+      break
+   else:
+      print("Se lleno la mesa ", mesasList[i].get_table_id())
+
+
+# mesasList[0].addCustomer(customerGroup)
+# mesasList[0].addCustomer(customerGroup2)
+# mesasList[0].show()
 
 print(mesasList[0].tableAvailable())
 
