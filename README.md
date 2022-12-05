@@ -6,7 +6,7 @@ python based simulation project with educational pourposes
  - [ ] define the event 'customer leaves the table'
  - [ ] Utilities
 	- [ ] Margen de error chefs.
-	- [ ] Distribución de llegadas customers.
+	- [X] Distribución de llegadas customers.
 	- [ ] Pago de propinas.
 	- [ ] Compartir mesas.
 	- [ ] Modulo Generación de Graficas.
