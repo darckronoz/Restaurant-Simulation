@@ -66,6 +66,7 @@ for i in range(len(mesasList)):
 for i in range(len(mesasList)):
 
    if mesasList[i].addCustomer(customerGroup):
+
       print('Se añadío a la mesa ', mesasList[i].get_table_id())
       break
    else:
