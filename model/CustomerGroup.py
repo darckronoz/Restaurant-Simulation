@@ -13,7 +13,8 @@ class CustomerGroup:
         self._paymentType = PaymentTypeEnum(paymentType)
         self._paymentMode = PaymentModeEnum(paymentMode)
         self._total_price_orderGroup = 0
-        self._total_time_orderGroup = 0
+        # self._total_time_orderGroup = 0
+        self._eat_process_finish = False
 
     def _get_customer(self):
         return self._customers
@@ -27,14 +28,21 @@ class CustomerGroup:
     def _get_paymentMode(self):
         return self._paymentMode
 
-    def _service_time(self):
-        return "Fabuchitor"
+    def _set_eat_process_finish(self, eatFinish):
+        self._eat_process_finish=eatFinish
+
+    def _get_eat_process_finish(self):
+        return self._eat_process_finish
+
 
     # Tiempo total de grupo por mesa
     def totalTimeServiceGroup(self):
+        total_time_orderGroup=0
+        d=[]
         for i in range(len(self._customers)):
-            self._total_time_orderGroup+=self._customers[i].order.get_total_time
-        return self._total_time_orderGroup
+            d.append(self.customer[i].order.get_total_time())
+            total_time_orderGroup=max(d)
+        return total_time_orderGroup
 
 
     # Precio total de grupo
@@ -49,7 +57,7 @@ class CustomerGroup:
     idGroup= property(fget=_get_id_group)
     paymentType=property(fget=_get_paymentType)
     paymentMode=property(fget=_get_paymentMode)
-    serviceTime=property(fget=_service_time)
+    eatProcess=property(fget=_get_eat_process_finish, fset=_set_eat_process_finish)
     totalPriceGroup=property(fget=_get_total_price_order_group)
 
 

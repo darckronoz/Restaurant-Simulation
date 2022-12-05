@@ -11,9 +11,9 @@ from model.Order import Order
 from model.Plate import Plate
 
 
-plate= Plate("Churrasco", 5, 15, 80, 4,1)
-plateTwo= Plate("Bistec a Caballo", 5, 10, 2, 4,2)
-plateThree= Plate("Frijoles con Cayo", 5, 5, 2, 4,1)
+plate= Plate("Churrasco", 1, 15, 80, 3,1)
+plateTwo= Plate("Bistec a Caballo", 1, 10, 2, 1,2)
+plateThree= Plate("Frijoles con Cayo", 5, 5, 2, 2,1)
 plateList1=[plate,plateTwo]
 plateList2=[plate,plateTwo,plateThree]
 plateList3=[plate]
@@ -56,33 +56,44 @@ customerGroup3 = CustomerGroup(3, customerGroupList, ran.randint(1, 3), ran.rand
 customerGroup4 = CustomerGroup(4, customerGroupList, ran.randint(1, 3), ran.randint(1, 3))
 
 for i in range(len(mesasList)):
+
    if mesasList[i].addCustomer(customerGroup):
       print('Se añadío a la mesa ', mesasList[i].get_table_id())
       break
    else:
-      print("Se lleno la mesa ", mesasList[i].get_table_id())
-
-
-for i in range(len(mesasList)):
-   if mesasList[i].addCustomer(customerGroup):
-      print('Se añadío a la mesa ', mesasList[i].get_table_id())
-      break
-   else:
-      print("Se lleno la mesa ", mesasList[i].get_table_id())
+      print("Sin disponibilidad en la mesa: ", mesasList[i].get_table_id())
 
 for i in range(len(mesasList)):
+
    if mesasList[i].addCustomer(customerGroup):
       print('Se añadío a la mesa ', mesasList[i].get_table_id())
       break
    else:
-      print("Se lleno la mesa ", mesasList[i].get_table_id())
+      print("Sin disponibilidad en la mesa: ", mesasList[i].get_table_id())
+
+for i in range(len(mesasList)):
+
+   if mesasList[i].addCustomer(customerGroup):
+      print('Se añadío a la mesa ', mesasList[i].get_table_id())
+      break
+   else:
+      print("Sin disponibilidad en la mesa: ", mesasList[i].get_table_id())
+
+for i in range(len(mesasList)):
+
+   if mesasList[i].addCustomer(customerGroup):
+      print('Se añadío a la mesa ', mesasList[i].get_table_id())
+      break
+   else:
+      print("Sin disponibilidad en la mesa: ", mesasList[i].get_table_id())
+
 
 
 # mesasList[0].addCustomer(customerGroup)
 # mesasList[0].addCustomer(customerGroup2)
 # mesasList[0].show()
 
-print(mesasList[0].tableAvailable())
+# print(mesasList[0].tableAvailable())
 
 
 for i in range(len(customerGroupList)):
@@ -95,7 +106,6 @@ for i in range(len(customerGroupList)):
       customerGroupList[i].order=order3
 
 
-
 # Muestra informacion
 for i in range(len(customerGroup.customer)):
    print(customerGroup.customer[i].customer_id)
@@ -103,7 +113,11 @@ for i in range(len(customerGroup.customer)):
       print(customerGroup.customer[i].order.plates[j].name)
 
 
+print("EL tiempo total gastado por grupo es  ", customerGroup.totalTimeServiceGroup() )
 
+# activa los hilos de todas las mesas
+for i in mesasList:
+   i.start()
 
 cashier= Cashier()
 

@@ -3,7 +3,7 @@ from model.PlateTypeEnum import PlateTypeEnum
 
 class Plate:
 
-    def __init__(self, plate_name, preparationTime, price, score, eating_time,plate_type):
+    def __init__(self, plate_name, preparationTime, price, score, eating_time, plate_type):
         self._plate_name=plate_name
         self._eating_time = eating_time
         self._score = score

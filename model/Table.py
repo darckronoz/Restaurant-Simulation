@@ -2,6 +2,9 @@ import numpy as np
 
 from Customer import Customer
 from CustomerGroup import CustomerGroup
+import threading
+import datetime
+import time
 
 from model.Order import Order
 
@@ -15,6 +18,7 @@ class Table:
         self.customersGroupList = []
         self.state = True
         self.table_id = table_id
+        self.customersQueue = []
 
     #the restaurant only admits to share the table once
     #if the table is empty the customers will be the new self.customers array
@@ -64,6 +68,32 @@ class Table:
     def tableAvailable(self):
         return len(self.customersGroupList) < 2 and self.setShareable()
 
+    def proccesEat(self, p):
+
+        while(True):
+            if len(self.customersGroupList) != 0 and len(self.customersGroupList) >= p+1:
+                timeRegresive =self.customersGroupList[0].totalTimeServiceGroup()
+                for i in range(timeRegresive, 0,-1):
+                    time.sleep(1)
+                    print("EL tiempo va ", i)
+                self.customersGroupList[p].eatProcess = True
+                self.customersQueue.append(self.customersGroupList[p])
+                print("Lo elimino")
+
+                self.customersGroupList.pop(p)
+
+
+
+
+
+
+            # while True:
+            #
+            #     if len(self._clientGroupQueue) != 0:
+            #         self._state = True
+            #         time.sleep(5)
+            #         self.totalPay()
+            #         self.popClientGroupQueue()
 
 
     def show(self):
@@ -73,3 +103,8 @@ class Table:
                 print('id:', n.customer_id)
 
 
+    def start(self):
+        hiloTable = threading.Thread(target=self.proccesEat, args=(0,))
+        hiloTableOne = threading.Thread(target=self.proccesEat, args=(1,))
+        hiloTable.start()
+        hiloTableOne.start()
