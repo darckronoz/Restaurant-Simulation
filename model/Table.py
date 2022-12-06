@@ -1,7 +1,7 @@
 import numpy as np
 
-from Customer import Customer
-from CustomerGroup import CustomerGroup
+from model.Customer import Customer
+from model.CustomerGroup import CustomerGroup
 import threading
 import datetime
 import time
@@ -69,32 +69,20 @@ class Table:
         return len(self.customersGroupList) < 2 and self.setShareable()
 
     def proccesEat(self, p):
-
         while(True):
             if len(self.customersGroupList) != 0 and len(self.customersGroupList) >= p+1:
                 timeRegresive =self.customersGroupList[0].totalTimeServiceGroup()
-                for i in range(timeRegresive, 0,-1):
+                for i in range(timeRegresive):
                     time.sleep(1)
-                    print("EL tiempo va ", i)
                 self.customersGroupList[p].eatProcess = True
                 self.customersQueue.append(self.customersGroupList[p])
                 print("Lo elimino")
 
                 self.customersGroupList.pop(p)
+                print("IDDDDDDDDDDDDDDD ",self.customersQueue[0].idGroup)
 
-
-
-
-
-
-            # while True:
-            #
-            #     if len(self._clientGroupQueue) != 0:
-            #         self._state = True
-            #         time.sleep(5)
-            #         self.totalPay()
-            #         self.popClientGroupQueue()
-
+    def get_customer_queue(self):
+        return self.customersQueue
 
     def show(self):
         for i in range(len(self.customersGroupList)):

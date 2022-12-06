@@ -1,6 +1,6 @@
 
-from PaymentModeEnum import PaymentModeEnum
-from PaymentTypeEnum import PaymentTypeEnum
+from model.PaymentModeEnum import PaymentModeEnum
+from model.PaymentTypeEnum import PaymentTypeEnum
 
 
 class CustomerGroup:
