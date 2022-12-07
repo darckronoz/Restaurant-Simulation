@@ -1,7 +1,5 @@
 import threading
 
-
-
 class Table:
 
     def __init__(self, table_id):

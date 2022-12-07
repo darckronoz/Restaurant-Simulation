@@ -1,35 +1,27 @@
 # imports.
 import threading
 import time
+import random as ran
 
 from distributed import get_task_stream
 
+# import Utilities.
+from model.PlateTypeEnum import PlateTypeEnum
+from utilities.Utilities import *
+
 from model.Cashier import Cashier
 from model.Chef import Chef
-# from model.CustomerGroup import CustomerGroup
-from model.Kitchen import Kitchen
-# from model.Order import Order
-# from model.Plate import Plate
-from model.PlateTypeEnum import PlateTypeEnum
-from model.Table import Table
-from model.Waiter import Waiter
-
-import random as ran
 from model.Customer import Customer
 from model.CustomerGroup import CustomerGroup
+from model.Kitchen import Kitchen
 from model.Table import Table
-import matplotlib.pyplot as plt
-import seaborn  as sns
-
-from model.Cashier import Cashier
+from model.Waiter import Waiter
 from model.Order import Order
 from model.Plate import Plate
-# import Utilities.
-
-from utilities.Utilities import *
 
 
 # init restaurant
+# restaurant waiting queue. [ ]
 # create objects. [x]
 # 1 Cashier [x]
 # 3 Chefs [x]
@@ -37,6 +29,9 @@ from utilities.Utilities import *
 # 4 Waiters [x]
 # 20 Tables [x]
 
+
+# TO:DO Restaurant entry queue
+restaurant_queue = []
 
 class Controller:
 
@@ -162,9 +157,9 @@ class Controller:
         for i in self.most_score_plates(PlateTypeEnum.Fuerte):
             print(i)
         time.sleep(5)
-        plt.bar(["aaa"], [1])
-        plt.title("Grafico platos fuertes")
-        plt.show()
+        # plt.bar(["aaa"], [1])
+        # plt.title("Grafico platos fuertes")
+        # plt.show()
 
     def most_score_plates(self, type_plate):
         d = []
