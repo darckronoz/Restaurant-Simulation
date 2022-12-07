@@ -1,8 +1,9 @@
 import threading
 import time
-
+import random as ran
 from model.PaymentModeEnum import PaymentModeEnum
 from model.PaymentTypeEnum import PaymentTypeEnum
+
 
 
 class CustomerGroup:
@@ -58,6 +59,10 @@ class CustomerGroup:
             if self.total_time_orderGroup == 0:
                 flag = False
                 self._eat_process_finish=True
+                for i in self.customer:
+                    for j in i.order.plates:
+                        j.score=ran.randint(1,5)
+
 
     def start(self):
         hilo = threading.Thread(target=self.start_service)

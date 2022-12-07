@@ -3,14 +3,15 @@ from model.PlateTypeEnum import PlateTypeEnum
 
 class Plate:
 
-    def __init__(self,id_plate, plate_name, preparationTime, price, score, eating_time, plate_type):
-        self._id_plate=id_plate
-        self._plate_name=plate_name
+    def __init__(self, id_plate, plate_name, preparationTime, price, eating_time, plate_type):
+        self._id_plate = id_plate
+        self._plate_name = plate_name
         self._eating_time = eating_time
-        self._score = score
+        self._score = 0
         self._price = price
         self._preparation_time = preparationTime
-        self._plate_type=PlateTypeEnum(plate_type)
+        self._plate_type = PlateTypeEnum(plate_type)
+        self._cont = 0
 
     def _get_eating_time(self):
         return self._eating_time
@@ -18,8 +19,14 @@ class Plate:
     def _get_name(self):
         return self._plate_name
 
+    def _add_score(self, score):
+        self._cont += 1
+        self._score += score
+
     def _get_score(self):
-        return self._score
+        if self._cont == 0:
+            self._cont += 1
+        return self._score / self._cont
 
     def _get_price(self):
         return self._price
@@ -31,16 +38,16 @@ class Plate:
         return self._plate_type
 
     def _get_total_time_service(self):
-        return self.eatingTime+self.preparationTime
+        return self.eatingTime + self.preparationTime
 
     def _get_id_plate(self):
         return self._id_plate
 
-    eatingTime=property(fget=_get_eating_time)
-    name=property(fget=_get_name)
-    score=property(fget=_get_score)
-    price=property(fget=_get_price)
-    preparationTime=property(fget=_get_preparation_time)
-    plateType=property(fget=_get_plate_type)
-    timeService=property(fget=_get_total_time_service)
-    idPlate=property(fget=_get_id_plate)
+    eatingTime = property(fget=_get_eating_time)
+    name = property(fget=_get_name)
+    score = property(fget=_get_score, fset=_add_score)
+    price = property(fget=_get_price)
+    preparationTime = property(fget=_get_preparation_time)
+    plateType = property(fget=_get_plate_type)
+    timeService = property(fget=_get_total_time_service)
+    idPlate = property(fget=_get_id_plate)

@@ -10,6 +10,7 @@ from model.Chef import Chef
 from model.Kitchen import Kitchen
 # from model.Order import Order
 # from model.Plate import Plate
+from model.PlateTypeEnum import PlateTypeEnum
 from model.Table import Table
 from model.Waiter import Waiter
 
@@ -17,6 +18,8 @@ import random as ran
 from model.Customer import Customer
 from model.CustomerGroup import CustomerGroup
 from model.Table import Table
+import matplotlib.pyplot as plt
+import seaborn  as sns
 
 from model.Cashier import Cashier
 from model.Order import Order
@@ -38,7 +41,10 @@ from utilities.Utilities import *
 class Controller:
 
     def __init__(self):
-        # self.initTodo()
+        self.is_paying = True
+        self.attend = True
+        self.hiloo = None
+        self.hiloprincipal = None
         self.plateList = []
         self.mesasList = []
         self.customerGroupList = []
@@ -46,13 +52,13 @@ class Controller:
         self.idOrder = 0
         self.create_plates()
         self.create_tables()
-        # self.create_cashier()
         self.cashier = Cashier()
+        self.finalList = []
 
     def create_plates(self):
-        plate = Plate(1, "Churrasco", 1, 15, 80, 3, 1)
-        plateTwo = Plate(2, "Bistec a Caballo", 1, 10, 2, 10, 2)
-        plateThree = Plate(3, "Frijoles con Cayo", 5, 23, 2, 2, 1)
+        plate = Plate(1, "Churrasco", 1, 80, 3, 1)
+        plateTwo = Plate(2, "Bistec a Caballo", 1, 2, 10, 2)
+        plateThree = Plate(3, "Frijoles con Cayo", 5, 23, 2, 1)
         self.plateList.append(plate)
         self.plateList.append(plateTwo)
         self.plateList.append(plateThree)
@@ -61,14 +67,12 @@ class Controller:
         list = []
         for i in range(ran.randint(1, 5)):
             tip = ran.randint(0, 1)
-            share = 0
             if tip == 1:
                 tip = True
                 share = False
             else:
                 tip = False
                 share = True
-            # print(tip)
             customer = Customer(ran.randint(1, 1000), tip, ran.randint(1, 4), share)
             list.append(customer)
         self.idGroup += 1
@@ -106,16 +110,6 @@ class Controller:
             list.append(self.plateList[ran.randint(1, len(self.plateList) - 1)])
         return list
 
-    # cashier.totalPay()
-
-    # def show(self):
-    #     # Muestra informacion
-    #     for i in range(len(customerGroup.customer)):
-    #         print(customerGroup.customer[i].customer_id)
-    #         for j in range(len(customerGroup.customer[i].order.plates)):
-    #             print(customerGroup.customer[i].order.plates[j].name)
-    #             print("EL tiempo total gastado por grupo es  ", customerGroup.totalTimeServiceGroup())
-
     def create_cashier(self):
         pass
 
@@ -131,59 +125,67 @@ class Controller:
                 d.append(self.mesasList[0].get_customer_queue()[0])
                 print("ID:  ", d[0].idGroup)
 
-    def start(self):
-        # hiloo = threading.Thread(target=self.get_list_queue)
-        # hiloo.start()
-        hiloo = threading.Thread(target=self.paying)
-        hiloo.start()
+    def start(self, t):
+        self.hiloo = threading.Thread(target=self.paying)
+        self.hiloprincipal = threading.Thread(target=self.start_simuation, args=(t,))
+        self.hiloo.start()
+        self.hiloprincipal.start()
         self.cashier.start()
 
     def paying(self):
-        while True:
+        while self.is_paying:
             for i in self.mesasList:
                 if i.get_customer_finished() is not None:
                     self.cashier.addClientGropQueue(i.get_customer_finished())
                     i.set_customer_finished()
 
+    def start_attend_people(self):
+        while self.attend:
+            tiempo = ran.randint(1, 5)
+            time.sleep(tiempo)
+            self.add_group_to_table()
+
+    def start_simuation(self, t):
+        while t:
+            time.sleep(1)
+            t -= 1
+            print("Quedan:   ", t)
+        self.attend = False
+        self.is_paying = False
+        self.cashier.shutdown()
+        self.shut_down_tables()
+        self.finalList = self.cashier.get_queue()
+        print("-------------------La simulación finalizó----------")
+        print("Total: ", self.cashier.get_total())
+        for i in self.most_score_plates_name(PlateTypeEnum.Fuerte):
+            print(i)
+        for i in self.most_score_plates(PlateTypeEnum.Fuerte):
+            print(i)
+        time.sleep(5)
+        plt.bar(["aaa"], [1])
+        plt.title("Grafico platos fuertes")
+        plt.show()
+
+    def most_score_plates(self, type_plate):
+        d = []
+        for i in self.plateList:
+            if i.plateType == type_plate:
+                d.append(round(i.score, 1))
+            return d
+
+    def most_score_plates_name(self, type_plate):
+        d = []
+        for i in self.plateList:
+            if i.plateType == type_plate:
+                d.append(i.name)
+            return d
+
+    def shut_down_tables(self):
+        for i in self.mesasList:
+            i.shut_down()
+
 
 c = Controller()
-c.add_group_to_table()
-c.add_group_to_table()
-c.add_group_to_table()
-c.add_group_to_table()
-
+c.start(40)
 c.init_thread_table()
-c.start()
-
-# cashier.addClientGropQueue(customerGroup2)
-# cashier.addClientGropQueue(customerGroup)
-# cashier.addClientGropQueue(customerGroup4)
-# cashier.addClientGropQueue(customerGroup3)
-
-# def initTodo(self):
-#             #chefs.
-#     margin_error_chef = [0, 0, 0] #fill with the function margin error in Utilities
-#     plates_chef_one = []
-#     chefOne = Chef(1, plates_chef_one, None, margin_error_chef[0], False)
-#     plates_chef_two = []
-#     chefTwo = Chef(1, plates_chef_two, None, margin_error_chef[1], False)
-#     plates_chef_three = []
-#     chefThree = Chef(1, plates_chef_three, None, margin_error_chef[2], False)
-#
-#     #kitchen.
-#     chefs = [chefOne, chefTwo, chefThree]
-#     freezer = [] #queue
-#     kitchen = Kitchen(chefs, freezer)
-#
-#     #tables.
-#     tables = []
-#     for i in range(20):
-#         tables.append(Table(False, i+1))
-#
-#     #waiters.
-#     waiters = []
-#     orderTimes = [0, 0, 0, 0]
-#     cleanTimes = [0, 0, 0, 0]
-#     serviceTimes = [0, 0, 0, 0]
-#     for i in range(4):
-#         waiters.append(Waiter(i+1, False, orderTimes[i], cleanTimes[i], serviceTimes[i], tables, 0, 0))
+c.start_attend_people()
