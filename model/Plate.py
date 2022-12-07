@@ -3,7 +3,8 @@ from model.PlateTypeEnum import PlateTypeEnum
 
 class Plate:
 
-    def __init__(self, plate_name, preparationTime, price, score, eating_time,plate_type):
+    def __init__(self,id_plate, plate_name, preparationTime, price, score, eating_time, plate_type):
+        self._id_plate=id_plate
         self._plate_name=plate_name
         self._eating_time = eating_time
         self._score = score
@@ -29,13 +30,17 @@ class Plate:
     def _get_plate_type(self):
         return self._plate_type
 
+    def _get_total_time_service(self):
+        return self.eatingTime+self.preparationTime
+
+    def _get_id_plate(self):
+        return self._id_plate
+
     eatingTime=property(fget=_get_eating_time)
     name=property(fget=_get_name)
     score=property(fget=_get_score)
     price=property(fget=_get_price)
     preparationTime=property(fget=_get_preparation_time)
     plateType=property(fget=_get_plate_type)
-
-
-plate= Plate("Churrasco", 5, 20, 2, 4,1)
-# print(plate.plateType.name)
+    timeService=property(fget=_get_total_time_service)
+    idPlate=property(fget=_get_id_plate)
