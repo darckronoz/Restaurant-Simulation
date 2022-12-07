@@ -53,7 +53,7 @@ class Cashier:
             for j in i.customer:
                 print("Cliente #: ", j.customer_id, " Total order: ", j.order.get_total_order())
                 self.tototal+=j.order.get_total_order()
-                print("TOTTATATAL ",self.tototal)
+                print("TOTTATATAL ",self.tototal )
 
 
 
