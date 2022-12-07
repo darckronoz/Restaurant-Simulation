@@ -57,6 +57,7 @@ class Controller:
 
     def create_group(self):
         list = []
+        #generate 1 to 5 range to customers
         for i in range(ran.randint(1, 5)):
             tip = ran.randint(0, 1)
             share = 0
@@ -67,9 +68,16 @@ class Controller:
                 tip = False
                 share = True
             # print(tip)
+            # generate tip = True o False
+            # generate share = True or false
+            # capacity = ran 1 to 4
+            # id = change to global index
             customer = Customer(ran.randint(1, 1000), tip, ran.randint(1, 4), share)
             list.append(customer)
         self.idGroup += 1
+
+        #tipo de pago = 1 to 3 rand
+        #modo de pago = 1 to 3 rand
         customerG = CustomerGroup(self.idGroup, list, ran.randint(1, 3), ran.randint(1, 3))
         return customerG
 
@@ -82,6 +90,7 @@ class Controller:
         for i in range(20):
             self.mesasList.append(Table(i + 1))
 
+    #customer arrives
     def add_group_to_table(self):
         customerG = self.create_group()
         for i in range(len(self.mesasList)):
@@ -100,7 +109,9 @@ class Controller:
 
     def assign_order_to_customer(self, capacidad):
         list = []
+        #rand 1 to capacity
         for i in range(ran.randint(1, capacidad)):
+            #rand 1 to total plate -1
             list.append(self.plateList[ran.randint(1, len(self.plateList) - 1)])
         return list
 

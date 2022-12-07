@@ -19,6 +19,8 @@ class Cashier:
             # print(len(self._clientGroupQueue))
             if len(self._clientGroupQueue) != 0:
                 self._state = True
+                #to: do
+                #tiempo de pago
                 time.sleep(10)
                 print("Total: ",self.payBill())
                 self.popClientGroupQueue()
