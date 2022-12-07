@@ -6,9 +6,6 @@ import threading
 import datetime
 import time
 
-from model.Order import Order
-
-
 class Table:
 
     # customers: array of customers.

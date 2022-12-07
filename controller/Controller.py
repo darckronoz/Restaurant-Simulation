@@ -1,32 +1,27 @@
 # imports.
 import threading
 import time
+import random as ran
 
 from distributed import get_task_stream
 
-from model.Cashier import Cashier
-from model.Chef import Chef
-# from model.CustomerGroup import CustomerGroup
-from model.Kitchen import Kitchen
-# from model.Order import Order
-# from model.Plate import Plate
-from model.Table import Table
-from model.Waiter import Waiter
-
-import random as ran
-from model.Customer import Customer
-from model.CustomerGroup import CustomerGroup
-from model.Table import Table
-
-from model.Cashier import Cashier
-from model.Order import Order
-from model.Plate import Plate
 # import Utilities.
 
 from utilities.Utilities import *
 
+from model.Cashier import Cashier
+from model.Chef import Chef
+from model.Customer import Customer
+from model.CustomerGroup import CustomerGroup
+from model.Kitchen import Kitchen
+from model.Table import Table
+from model.Waiter import Waiter
+from model.Order import Order
+from model.Plate import Plate
+
 
 # init restaurant
+# restaurant waiting queue. [ ]
 # create objects. [x]
 # 1 Cashier [x]
 # 3 Chefs [x]
@@ -34,6 +29,9 @@ from utilities.Utilities import *
 # 4 Waiters [x]
 # 20 Tables [x]
 
+
+# TO:DO Restaurant entry queue
+restaurant_queue = []
 
 class Controller:
 
@@ -155,11 +153,6 @@ c.add_group_to_table()
 c.init_thread_table()
 c.start()
 
-# cashier.addClientGropQueue(customerGroup2)
-# cashier.addClientGropQueue(customerGroup)
-# cashier.addClientGropQueue(customerGroup4)
-# cashier.addClientGropQueue(customerGroup3)
-
 # def initTodo(self):
 #             #chefs.
 #     margin_error_chef = [0, 0, 0] #fill with the function margin error in Utilities
@@ -187,3 +180,4 @@ c.start()
 #     serviceTimes = [0, 0, 0, 0]
 #     for i in range(4):
 #         waiters.append(Waiter(i+1, False, orderTimes[i], cleanTimes[i], serviceTimes[i], tables, 0, 0))
+
