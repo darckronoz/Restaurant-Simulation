@@ -11,6 +11,7 @@ class Cashier:
         self._clientGroupQueue = []
         self._totalPay = 0
         self.queue=[]
+        self.tototal=0
 
     # Orden pago
     def payProcess(self):
@@ -51,6 +52,9 @@ class Cashier:
             print("Grupo #: ", i.idGroup)
             for j in i.customer:
                 print("Cliente #: ", j.customer_id, " Total order: ", j.order.get_total_order())
+                self.tototal+=j.order.get_total_order()
+                print("TOTTATATAL ",self.tototal)
+
 
 
     # def showCashier(self):
