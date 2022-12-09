@@ -1,21 +1,18 @@
 # imports.
 import threading
-import time
-import random as ran
+#import time
 
-from distributed import get_task_stream
-
-# import Utilities.
+#from distributed import get_task_stream
 
 from utilities.Utilities import *
 
 from model.Cashier import Cashier
-from model.Chef import Chef
+#from model.Chef import Chef
 from model.Customer import Customer
 from model.CustomerGroup import CustomerGroup
-from model.Kitchen import Kitchen
+#from model.Kitchen import Kitchen
 from model.Table import Table
-from model.Waiter import Waiter
+#from model.Waiter import Waiter
 from model.Order import Order
 from model.Plate import Plate
 
@@ -37,6 +34,7 @@ class Controller:
 
     def __init__(self):
         # self.initTodo()
+        self.customer_id = 0
         self.plateList = []
         self.mesasList = []
         self.customerGroupList = []
@@ -56,29 +54,13 @@ class Controller:
         self.plateList.append(plateThree)
 
     def create_group(self):
-        list = []
-        #generate 1 to 5 range to customers
-        for i in range(ran.randint(1, 5)):
-            tip = ran.randint(0, 1)
-            share = 0
-            if tip == 1:
-                tip = True
-                share = False
-            else:
-                tip = False
-                share = True
-            # print(tip)
-            # generate tip = True o False
-            # generate share = True or false
-            # capacity = ran 1 to 4
-            # id = change to global index
-            customer = Customer(ran.randint(1, 1000), tip, ran.randint(1, 4), share)
-            list.append(customer)
+        aux_list = []
+        for i in range(generate_Ni_min_max(1,5)):
+            self.customer_id += 1
+            customer = Customer(self.customer_id, generate_Tip(), generate_custm_capacity(), generate_Share())
+            aux_list.append(customer)
         self.idGroup += 1
-
-        #tipo de pago = 1 to 3 rand
-        #modo de pago = 1 to 3 rand
-        customerG = CustomerGroup(self.idGroup, list, ran.randint(1, 3), ran.randint(1, 3))
+        customerG = CustomerGroup(self.idGroup, aux_list, generate_pay_type(), generate_pay_mode())
         return customerG
 
     def create_orders(self, plateList):
@@ -108,12 +90,10 @@ class Controller:
             customer.order = self.create_orders(self.assign_order_to_customer(customer.capacity))
 
     def assign_order_to_customer(self, capacidad):
-        list = []
-        #rand 1 to capacity
-        for i in range(ran.randint(1, capacidad)):
-            #rand 1 to total plate -1
-            list.append(self.plateList[ran.randint(1, len(self.plateList) - 1)])
-        return list
+        aux_list = []
+        for i in range(generate_Ni_min_max(1, capacidad)):
+            aux_list.append(self.plateList[generate_Ni_min_max(1, len(self.plateList) - 1)])
+        return aux_list
 
     # cashier.totalPay()
 
