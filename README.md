@@ -4,24 +4,24 @@ python based simulation project with educational pourposes
 
 # TO - DO
  - [ ] define the event 'customer leaves the table'
- - [ ] Utilities
-	- [ ] Margen de error chefs.
-	- [X] Distribución de llegadas customers.
-	- [ ] Pago de propinas.
-	- [ ] Compartir mesas.
-	- [ ] Modulo Generación de Graficas.
-		- [ ] Grafica 1.
-		- [ ] Grafica 2.
-		- [ ] Grafica 3.
-		- [ ] Grafica 4.
+ - [x] Utilities
+	- [x] Margen de error chefs.
+	- [x] Distribución de llegadas customers.
+	- [x] Pago de propinas.
+	- [x] Compartir mesas.
+	- [x] Modulo Generación de Graficas.
+		- [x] Grafica 1.
+		- [x] Grafica 2.
+		- [x] Grafica 3.
+		- [x] Grafica 4.
  - [x] rename Client to Customer.
  - [x] rename ClientGroup to CustomerGroup.
- - [ ] develop module functions.
+ - [x] develop module functions.
 	- [ ] Table.
 		- [x] addCustomer().
 		- [x] isEmpty().
 		- [x] isShareable().
-		- [ ] getFreeSeats().
+		- [x] getFreeSeats().
 	- [ ] Waiter.
 		- [x] assignTable().
 		- [x] findEmptyTable().
@@ -30,7 +30,7 @@ python based simulation project with educational pourposes
 		- [x] getSize().
  - [x] structure the restaurant (controller).
 	- [x] base del restaurante
-	- [ ] comenzar con los eventos
+	- [x] comenzar con los eventos
 		- [ ] llega un cliente
 		- [ ] preparación de plato
 		- [ ] plato a la mesa/cliente come

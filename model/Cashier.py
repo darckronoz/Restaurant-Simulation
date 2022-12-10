@@ -19,7 +19,6 @@ class Cashier:
     # Orden pago
     def payProcess(self):
         while self.is_on:
-            # print(len(self._clientGroupQueue))
             if len(self._clientGroupQueue) != 0:
                 self._state = True
                 time.sleep(4)
@@ -72,7 +71,4 @@ class Cashier:
     def get_total(self):
         return self._totalPay
 
-    # def showCashier(self):
-    #     for i in range (len(self._clientGroupQueue)):
-    # print(self._clientGroupQueue[i])
-    # hshshshhshssd
+

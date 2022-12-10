@@ -1,21 +1,21 @@
 # imports.
 import threading
-import time
-import random as ran
-
+#import time
 from distributed import get_task_stream
 
 # import Utilities.
 from model.PlateTypeEnum import PlateTypeEnum
+=======
+#from distributed import get_task_stream
 from utilities.Utilities import *
 
 from model.Cashier import Cashier
-from model.Chef import Chef
+#from model.Chef import Chef
 from model.Customer import Customer
 from model.CustomerGroup import CustomerGroup
-from model.Kitchen import Kitchen
+#from model.Kitchen import Kitchen
 from model.Table import Table
-from model.Waiter import Waiter
+#from model.Waiter import Waiter
 from model.Order import Order
 from model.Plate import Plate
 
@@ -59,19 +59,13 @@ class Controller:
         self.plateList.append(plateThree)
 
     def create_group(self):
-        list = []
-        for i in range(ran.randint(1, 5)):
-            tip = ran.randint(0, 1)
-            if tip == 1:
-                tip = True
-                share = False
-            else:
-                tip = False
-                share = True
-            customer = Customer(ran.randint(1, 1000), tip, ran.randint(1, 4), share)
-            list.append(customer)
+        aux_list = []
+        for i in range(generate_Ni_min_max(1,5)):
+            self.customer_id += 1
+            customer = Customer(self.customer_id, generate_Tip(), generate_custm_capacity(), generate_Share())
+            aux_list.append(customer)
         self.idGroup += 1
-        customerG = CustomerGroup(self.idGroup, list, ran.randint(1, 3), ran.randint(1, 3))
+        customerG = CustomerGroup(self.idGroup, aux_list, generate_pay_type(), generate_pay_mode())
         return customerG
 
     def create_orders(self, plateList):
@@ -83,6 +77,7 @@ class Controller:
         for i in range(20):
             self.mesasList.append(Table(i + 1))
 
+    #customer arrives
     def add_group_to_table(self):
         customerG = self.create_group()
         for i in range(len(self.mesasList)):
@@ -100,10 +95,10 @@ class Controller:
             customer.order = self.create_orders(self.assign_order_to_customer(customer.capacity))
 
     def assign_order_to_customer(self, capacidad):
-        list = []
-        for i in range(ran.randint(1, capacidad)):
-            list.append(self.plateList[ran.randint(1, len(self.plateList) - 1)])
-        return list
+        aux_list = []
+        for i in range(generate_Ni_min_max(1, capacidad)):
+            aux_list.append(self.plateList[generate_Ni_min_max(1, len(self.plateList) - 1)])
+        return aux_list
 
     def create_cashier(self):
         pass
