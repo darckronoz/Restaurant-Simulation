@@ -150,7 +150,7 @@ class Controller:
         self.cashier.shutdown()
         self.shut_down_tables()
         self.finalList = self.cashier.get_queue()
-        print("-------------------La simulación finalizó----------")
+        print("----------------La simulación finalizó----------")
         print("Total: ", self.cashier.get_total())
         for i in self.most_score_plates_name(PlateTypeEnum.Fuerte):
             print(i)
