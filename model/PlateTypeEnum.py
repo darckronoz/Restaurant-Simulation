@@ -1,6 +1,7 @@
 from enum import Enum
 
-class PlateTypeEnum (Enum):
-    Fuerte = 1
-    Entrada = 2
+
+class PlateTypeEnum(Enum):
+    Entrada = 1
+    Fuerte = 2
     Postre = 3

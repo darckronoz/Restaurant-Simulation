@@ -1,0 +1,11 @@
+l = []
+l.append('cristhian')
+l.append('sergio')
+l.append('mauricio')
+print(l)
+d = l.pop(0)
+print(l)
+l.append('pedro')
+l.append('lucas')
+l.insert(0, d)
+print(l)

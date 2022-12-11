@@ -1,10 +1,5 @@
-from model.PlateTypeEnum import PlateTypeEnum
-from model.QueueStateEnum import QueueStateEnum
 import threading
-import datetime
 import time
-import matplotlib.pyplot as plt
-import seaborn  as sns
 
 
 class Cashier:

@@ -1,8 +1,10 @@
 import threading
 
+
 class Table:
 
-    def __init__(self, table_id):
+    def __init__(self, table_id, zone):
+        self.zone = zone
         self.is_on = True
         self.table_capacity = 5
         self.customersGroupList = []
@@ -10,9 +12,12 @@ class Table:
         self.table_id = table_id
         self.customersQueue = []
         self.customer_finished = None
+        self.full = False
 
     def addCustomer(self, customGroup):
         if self.isEmpty():
+            if len(customGroup.customer) == 5:
+                self.full = True
             self.customersGroupList.append(customGroup)
             print(self.customersGroupList[0].customer[0].customer_id)
             self.table_capacity -= len(self.customersGroupList[0].customer)
@@ -20,6 +25,7 @@ class Table:
         elif self.tableAvailable() and self.table_capacity >= len(customGroup.customer):
             self.customersGroupList.append(customGroup)
             self.table_capacity -= len(self.customersGroupList[1].customer)
+            self.full = True
             return True
         return False
 
@@ -52,7 +58,7 @@ class Table:
 
     def show(self):
         for i in range(len(self.customersGroupList)):
-            print(self.customersGroupList[i].idGroup)
+            print(self.customersGroupList[i].group_id)
             for n in self.customersGroupList[i].customer:
                 print('id:', n.customer_id)
 
@@ -74,8 +80,7 @@ class Table:
         self.customer_finished = None
 
     def shut_down(self):
-        self.is_on= False
-
+        self.is_on = False
 
     def start(self):
         hiloTableTrue = threading.Thread(target=self.start_service)
