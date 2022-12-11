@@ -3,7 +3,6 @@ import utilities.Mult_Congruence as mc
 import matplotlib.pyplot as plt
 from matplotlib import style
 import numpy as np
-import pandas as pd
 
 
 def define_chef_margin_error():
