@@ -28,6 +28,9 @@ class Order:
             total_time+=self._plates[i].timeService
         return total_time
 
+
+
+
     plates = property(fget=_get_plates)
     idOrder= property(fget=_get_id_order)
     # totalOrder= property(fget=_get_total_order)

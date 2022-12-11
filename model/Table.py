@@ -1,15 +1,9 @@
-import numpy as np
-
-from model.Customer import Customer
-from model.CustomerGroup import CustomerGroup
 import threading
-import datetime
-import time
 
 class Table:
 
-    # customers: array of customers.
     def __init__(self, table_id):
+        self.is_on = True
         self.table_capacity = 5
         self.customersGroupList = []
         self.state = True
@@ -17,16 +11,6 @@ class Table:
         self.customersQueue = []
         self.customer_finished = None
 
-    # the restaurant only admits to share the table once
-    # if the table is empty the customers will be the new self.customers array
-    # the capacity will be 5 - (the lenght of the customers array)
-    # and it'll call setShareable function with the new customers
-
-    # if it's a call to share the table it has to had completed the conditions on Waiter Class
-    # so it'll only enter the else if the group is smaller or equal to the table capacity
-    # and if the table is shareable
-    # then it'll concatenate the self.customers array with the array to share with
-    # update the capacity and set Shareable to False so it cant be shared again.
     def addCustomer(self, customGroup):
         if self.isEmpty():
             self.customersGroupList.append(customGroup)
@@ -39,7 +23,6 @@ class Table:
             return True
         return False
 
-    # function that returns True if the customers array is empty
     def isEmpty(self):
         return len(self.customersGroupList) == 0
 
@@ -64,18 +47,6 @@ class Table:
     def tableAvailable(self):
         return len(self.customersGroupList) < 2 and self.setShareable()
 
-    def proccesEat(self, p):
-        while (True):
-            if len(self.customersGroupList) != 0 and len(self.customersGroupList) >= p + 1:
-                timeRegresive = self.customersGroupList[p].totalTimeServiceGroup()
-                for i in range(timeRegresive):
-                    time.sleep(1)
-                    # print("fefff ",timeRegresive-i)
-                self.customersGroupList[p].eatProcess = True
-                self.customersQueue.append(self.customersGroupList[p])
-                self.customersGroupList.pop(p)
-                print("Lo elimino")
-
     def get_customer_queue(self):
         return self.customersQueue
 
@@ -85,20 +56,11 @@ class Table:
             for n in self.customersGroupList[i].customer:
                 print('id:', n.customer_id)
 
-    def start(self):
-        # hiloTable = threading.Thread(target=self.proccesEat, args=(0,),daemon=True)
-        # hiloTableOne = threading.Thread(target=self.proccesEat, args=(1,),daemon=True)
-        hiloTableTrue = threading.Thread(target=self.start_service)
-        hiloTableTrue.start()
-        #
-        # hiloTable.start()
-        # hiloTableOne.start()
-
     def get_list(self):
         return self.customersGroupList
 
     def start_service(self):
-        while True:
+        while self.is_on:
             for c in self.customersGroupList:
                 if c.eatProcess:
                     self.customer_finished = c
@@ -110,3 +72,11 @@ class Table:
 
     def set_customer_finished(self):
         self.customer_finished = None
+
+    def shut_down(self):
+        self.is_on= False
+
+
+    def start(self):
+        hiloTableTrue = threading.Thread(target=self.start_service)
+        hiloTableTrue.start()
