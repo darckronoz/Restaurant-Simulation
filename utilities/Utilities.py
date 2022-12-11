@@ -24,7 +24,6 @@ def generate_small_ri(n):
 
 
 def get_arrival_time(rate, seed):
-    print(seed)
     ln = np.log(1 - seed)
     return -ln / rate
 

@@ -49,7 +49,9 @@ class Controller:
         self.hours = multiprocessing.Value(ctypes.c_int, 0)
         self.is_paying = True
         self.attend = True
-        self.hiloo = None
+        self.dist_thread = None
+        self.timer_thread = None
+        self.payment_thread = None
         self.hiloprincipal = None
 
     def create_waiters(self):
@@ -106,7 +108,6 @@ class Controller:
     # creates tables with its id and zones.
     def create_tables(self):
         for i in range(20):
-            print(i)
             if i <= 4:
                 self.table_List.append(Table(i + 1, 1))
             if 5 <= i < 10:
@@ -118,6 +119,7 @@ class Controller:
 
     def sit_group(self):
         group = self.restaurant_queue.pop(0)
+        print(f'llegaron {len(group.customer_list)} clientes!')
         for table in self.table_List:
             if table.addCustomer(group):
                 if table.full:
@@ -132,20 +134,18 @@ class Controller:
         group = self.create_group()
         self.restaurant_queue.append(group)
         if self.available_tables != 0:
-            if self.sit_group(group):
+            if self.sit_group():
                 return
 
     def customer_distribution(self):
-        t = multiprocessing.Process(target=self.timer)
-        t.start()
-        time.sleep(1)
+        print('customer Dist started')
         self.customer_arrives()
         for time_arrive in self.customer_ri:
+            if not self.attend:
+                return
             self.customer_arrives()
             x = get_arrival_time((3 / 7), time_arrive)
-            time.sleep(x / 60)
-            if not t.is_alive():
-                sys.exit(0)
+            time.sleep(x / 200)
 
     def create_orders(self, plateList):
         self.order_id += 1
@@ -167,8 +167,8 @@ class Controller:
 
     def init_thread_table(self):
         # activa los hilos de todas las mesas
-        for i in self.table_List:
-            i.start()
+        for table in self.table_List:
+            table.start()
 
     def get_list_queue(self):
         while True:
@@ -177,52 +177,48 @@ class Controller:
                 d.append(self.table_List[0].get_customer_queue()[0])
                 print("ID:  ", d[0].group_id)
 
-    def start(self, t):
-        self.hiloo = threading.Thread(target=self.paying)
-        self.hiloprincipal = threading.Thread(target=self.start_simuation, args=(t,))
-        self.hiloo.start()
+    def start(self):
+        self.payment_thread = threading.Thread(target=self.paying)
+        self.hiloprincipal = threading.Thread(target=self.start_simulation)
+        self.dist_thread = threading.Thread(target=self.customer_distribution)
+        self.payment_thread.start()
         self.hiloprincipal.start()
+        self.dist_thread.start()
         self.cashier.start()
 
     def paying(self):
+        print('paying started')
         while self.is_paying:
             for i in self.table_List:
                 if i.get_customer_finished() is not None:
                     self.cashier.addClientGropQueue(i.get_customer_finished())
                     i.set_customer_finished()
 
-    def timer(self):
-        while self.days.value < 7:
+    def start_simulation(self):
+        days = 1
+        print(f'simulation started: {days} days')
+        while self.days.value < days:
             time.sleep(1)
             self.hours.value += 1
             if self.hours.value == 24:
                 self.hours.value = 0
                 self.days.value += 1
+                print(f'día: {self.days.value} terminado')
         print(('d:', self.days.value, 'h:', self.hours.value))
+        self.end_simulation()
 
-    # def start_attend_people(self):
-    #   while self.attend:
-    #      tiempo = generate_Ni_min_max(1, 5)
-    #     time.sleep(tiempo)
-    #    self.add_group_to_table()
-
-    def start_simuation(self, t):
-        while t:
-            time.sleep(1)
-            t -= 1
-            print("Quedan:   ", t)
+    def end_simulation(self):
         self.attend = False
         self.is_paying = False
         self.cashier.shutdown()
         self.shut_down_tables()
         self.final_List = self.cashier.get_queue()
         print("----------------La simulación finalizó----------")
-        print("Total: ", self.cashier.get_total())
+        profit_restaurant(self.cashier.get_total())
         for i in self.most_score_plates_name(PlateTypeEnum.Fuerte):
             print(i)
         for i in self.most_score_plates(PlateTypeEnum.Fuerte):
             print(i)
-        time.sleep(5)
         # plt.bar(["aaa"], [1])
         # plt.title("Grafico platos fuertes")
         # plt.show()
@@ -247,6 +243,5 @@ class Controller:
 
 
 c = Controller()
-c.start(40)
+c.start()
 c.init_thread_table()
-c.customer_distribution()

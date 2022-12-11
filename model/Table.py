@@ -19,7 +19,6 @@ class Table:
             if len(customGroup.customer) == 5:
                 self.full = True
             self.customersGroupList.append(customGroup)
-            print(self.customersGroupList[0].customer[0].customer_id)
             self.table_capacity -= len(self.customersGroupList[0].customer)
             return True
         elif self.tableAvailable() and self.table_capacity >= len(customGroup.customer):
