@@ -1,8 +1,4 @@
-
-# from PseudoRandom import PseudoRandom as pr
-# import Mult_Congruence as mc
-
-import utilities.PseudoRandom as pr
+from utilities.PseudoRandom import PseudoRandom as pr
 import utilities.Mult_Congruence as mc
 import matplotlib.pyplot as plt
 from matplotlib import style
@@ -29,6 +25,7 @@ def generate_small_ri(n):
 
 
 def get_arrival_time(rate, seed):
+    print(seed)
     ln = np.log(1 - seed)
     return -ln / rate
 
