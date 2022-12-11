@@ -120,7 +120,7 @@ def best_daily_waiter(waiter, score):
 
 
 def profit_restaurant(value):
-    return f'Gannacias totales: {value}'
+    print(f'Ganancias totales: {value}')
 
 
 def common_payment_mode(mode):

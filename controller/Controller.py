@@ -145,7 +145,7 @@ class Controller:
                 return
             self.customer_arrives()
             x = get_arrival_time((3 / 7), time_arrive)
-            time.sleep(x / 200)
+            time.sleep(x / 3600)
 
     def create_orders(self, plateList):
         self.order_id += 1
@@ -213,7 +213,6 @@ class Controller:
         self.cashier.shutdown()
         self.shut_down_tables()
         self.final_List = self.cashier.get_queue()
-        print("----------------La simulación finalizó----------")
         profit_restaurant(self.cashier.get_total())
         for i in self.most_score_plates_name(PlateTypeEnum.Fuerte):
             print(i)
