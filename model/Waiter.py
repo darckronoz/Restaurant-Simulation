@@ -10,15 +10,16 @@ class Waiter:
     # tables: array with the tables.
     # tips: tips counter, acumulates all the tip the waiter has recieved
     # score: averages the score the waiter has received
-    def __init__(self, waiter_id, state, order_time, clean_time, service_time, tables, tips, score):
+    def __init__(self, waiter_id, order_time, clean_time, service_time, tips, score):
         self.waiter_id = waiter_id
-        self.state = state
+        self.state = False
         self.order_time = order_time
         self.clean_time = clean_time
         self.service_time = service_time
-        self.tables = tables
+        self.table = None
         self.tips = tips
         self.score = score
+        self.cont = 0
 
     # this function assigns customers to tables and if all the tables are full
     # then adds the customer to the tableQueue
@@ -33,6 +34,15 @@ class Waiter:
             else:
                 tableQueue.push(customers)
     
+    def add_score(self, score):
+        self.cont += 1
+        self.score += score
+
+    def get_score(self):
+        if self.cont == 0:
+            self.cont += 1
+        return self.score / self.cont
+
     # Function that returns the first empty table on the table list (self.tables)
     # if there's not empty tables returns False.
     def findEmptyTable(self):

@@ -109,9 +109,9 @@ def best_score_plate(d):
 def best_score_plate_graph(d):
     data = d
     style.use('dark_background')
-    plt.figure(figsize=(4, 4))
+    plt.figure(figsize=(3, 3))
     plt.bar(list(data.keys()), list(data.values()), color='purple', width=0.4)
-    plt.title('eficiencia cocineros')
+    plt.title('Mejores Platos')
     plt.show()
 
 

@@ -13,6 +13,7 @@ class Table:
         self.customersQueue = []
         self.customer_finished = None
         self.full = False
+        self.waiter = None
 
     def addCustomer(self, customGroup):
         if self.isEmpty():

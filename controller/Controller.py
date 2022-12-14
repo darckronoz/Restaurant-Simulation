@@ -1,6 +1,5 @@
 import ctypes
 import multiprocessing
-import sys
 import threading
 import time
 
@@ -23,9 +22,6 @@ class Controller:
         # Tiempos de servicio
         self.order_time = 0.021
         self.clean_time = 0.062
-        self.pay_cash = 0.0361
-        self.pay_card = 0.0172
-        self.pay_bank = 0.0308
 
         # InitRestaurant
         self.available_tables = 20
@@ -54,18 +50,22 @@ class Controller:
         self.payment_thread = None
         self.hiloprincipal = None
 
+        #statistics
+        self.best_entry = 0
+        self.best_dessert = 0
+        self.best_strong = 0
+
     def create_waiters(self):
         self.waiter_list.append(
-            Waiter(1, False, self.order_time, self.clean_time, [0.0107, 0.0114, 0.0217, 0.0204], self.table_List, 0, 0))
+            Waiter(1, self.order_time, self.clean_time, [0.0107, 0.0114, 0.0217, 0.0204], 0, 0))
         self.waiter_list.append(
-            Waiter(2, False, self.order_time, self.clean_time, [0.0175, 0.0169, 0.0345, 0.0310], self.table_List, 0, 0))
+            Waiter(2, self.order_time, self.clean_time, [0.0175, 0.0169, 0.0345, 0.0310], 0, 0))
         self.waiter_list.append(
-            Waiter(3, False, self.order_time, self.clean_time, [0.0152, 0.0166, 0.0292, 0.0277], self.table_List, 0, 0))
+            Waiter(3, self.order_time, self.clean_time, [0.0152, 0.0166, 0.0292, 0.0277], 0, 0))
         self.waiter_list.append(
-            Waiter(4, False, self.order_time, self.clean_time, [0.0110, 0.0125, 0.0261, 0.0244], self.table_List, 0, 0))
+            Waiter(4, self.order_time, self.clean_time, [0.0110, 0.0125, 0.0261, 0.0244], 0, 0))
 
     def create_plates(self):
-        pp = 20000
         # entradas
         self.plate_List.append(Plate(1, 'Mini Hojaldres de salchicha', 0.03, 12000, 0.03, 1))
         self.plate_List.append(Plate(2, 'Palitos de berenjena en salsa agridulce', 0.023, 10000, 0.023, 1))
@@ -125,6 +125,7 @@ class Controller:
                 if table.full:
                     self.available_tables -= 1
                 self.addOrder(group)
+                table.waiter = self.waiter_list[generate_Ni_min_max(0, 3)]
                 group.totalTimeServiceGroup()
                 group.start()
                 return True
@@ -145,7 +146,7 @@ class Controller:
                 return
             self.customer_arrives()
             x = get_arrival_time((3 / 7), time_arrive)
-            time.sleep(x / 3600)
+            time.sleep(x / 60)
 
     def create_orders(self, plateList):
         self.order_id += 1
@@ -192,6 +193,8 @@ class Controller:
             for i in self.table_List:
                 if i.get_customer_finished() is not None:
                     self.cashier.addClientGropQueue(i.get_customer_finished())
+                    self.score_plate(i.customersGroupList)
+                    self.score_waiter(i.waiter.waiter_id - 1)
                     i.set_customer_finished()
 
     def start_simulation(self):
@@ -207,20 +210,105 @@ class Controller:
         print(('d:', self.days.value, 'h:', self.hours.value))
         self.end_simulation()
 
+    def score_plate(self, customer_list):
+        for group in customer_list:
+            for custm in group.customer_list:
+                for plate in custm.order.plates:
+                    self.plate_List[plate.idPlate - 1].add_score(generate_Ni_min_max(0, 5))
+                    self.plate_List[plate.idPlate - 1].counter += 1
+                    self.update_best_seller_plate(plate.idPlate - 1)
+
+    def update_best_seller_plate(self, plate_id):
+        if self.plate_List[plate_id].plateType == PlateTypeEnum.Fuerte:
+            if self.plate_List[plate_id].counter > self.best_strong:
+                self.best_strong = self.plate_List[plate_id].counter
+        if self.plate_List[plate_id].plateType == PlateTypeEnum.Postre:
+            if self.plate_List[plate_id].counter > self.best_dessert:
+                self.best_dessert = self.plate_List[plate_id].counter
+        if self.plate_List[plate_id].plateType == PlateTypeEnum.Entrada:
+            if self.plate_List[plate_id].counter > self.best_entry:
+                self.best_entry = self.plate_List[plate_id].counter
+
+    def get_dessert_by_counter(self):
+        for plate in self.plate_List:
+            if plate.plateType == PlateTypeEnum.Postre:
+                if plate.counter == self.best_dessert:
+                    return plate
+
+    def get_strong_by_counter(self):
+        for plate in self.plate_List:
+            if plate.plateType == PlateTypeEnum.Fuerte:
+                if plate.counter == self.best_strong:
+                    return plate
+
+    def get_entry_by_counter(self):
+        for plate in self.plate_List:
+            if plate.plateType == PlateTypeEnum.Entrada:
+                if plate.counter == self.best_entry:
+                    return plate
+
+    def score_waiter(self, waiter):
+        self.waiter_list[waiter].add_score(generate_Ni_min_max(0, 5))
+
+    def best_plate_score(self):
+        plate_dict = dict()
+        a = 0
+        ka = 'Fuerte'
+        b = 0
+        kb = 'Postre'
+        d = 0
+        kc = 'Entrada'
+        plate_dict[ka] = 0
+        plate_dict[kb] = 0
+        plate_dict[kc] = 0
+        for plate in self.plate_List:
+            if plate.plateType == PlateTypeEnum.Fuerte:
+                if plate.get_score() > a:
+                    a = plate.get_score()
+                    x = plate.name
+                    plate_dict[x] = plate_dict.pop(ka)
+                    ka = x
+                    plate_dict[x] = a
+            if plate.plateType == PlateTypeEnum.Postre:
+                if plate.get_score() > b:
+                    b = plate.get_score()
+                    y = plate.name
+                    plate_dict[y] = plate_dict.pop(kb)
+                    kb = y
+                    plate_dict[y] = b
+            if plate.plateType == PlateTypeEnum.Entrada:
+                if plate.get_score() > d:
+                    d = plate.get_score()
+                    z = plate.name
+                    plate_dict[z] = plate_dict.pop(kc)
+                    kc = z
+                    plate_dict[z] = d
+        return plate_dict
+
+    def get_best_waiter(self):
+        waiter = -1
+        s = 0
+        for w in self.waiter_list:
+            if w.get_score() > s:
+                s = w.get_score()
+                waiter = w.waiter_id
+        return waiter
+
     def end_simulation(self):
         self.attend = False
         self.is_paying = False
         self.cashier.shutdown()
         self.shut_down_tables()
         self.final_List = self.cashier.get_queue()
-        profit_restaurant(self.cashier.get_total())
-        for i in self.most_score_plates_name(PlateTypeEnum.Fuerte):
-            print(i)
-        for i in self.most_score_plates(PlateTypeEnum.Fuerte):
-            print(i)
-        # plt.bar(["aaa"], [1])
-        # plt.title("Grafico platos fuertes")
-        # plt.show()
+        if __name__ == '__main__':
+            profit_restaurant(self.cashier.get_total())
+            w = self.get_best_waiter()
+            print(best_daily_waiter(w, self.waiter_list[w-1].get_score()))
+            print(best_seller_plate(self.get_entry_by_counter().name,
+                              self.get_strong_by_counter().name,
+                              self.get_dessert_by_counter().name))
+            print(best_score_plate(self.best_plate_score()))
+            best_score_plate_graph(self.best_plate_score())
 
     def most_score_plates(self, type_plate):
         d = []

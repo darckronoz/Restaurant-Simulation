@@ -1,5 +1,6 @@
 import threading
 import time
+from model.PaymentTypeEnum import PaymentTypeEnum
 
 
 class Cashier:
@@ -10,13 +11,22 @@ class Cashier:
         self._clientGroupQueue = []
         self._totalPay = 0
         self.queue = []
+        self.pay_cash = 0.0361
+        self.pay_card = 0.0172
+        self.pay_bank = 0.0308
 
     # Orden pago
     def payProcess(self):
         while self.is_on:
             if len(self._clientGroupQueue) != 0:
                 self._state = True
-                time.sleep(4)
+                if self._clientGroupQueue[0].paymentType == PaymentTypeEnum.Tarjeta:
+                    time.sleep(self.pay_card)
+                if self._clientGroupQueue[0].paymentType == PaymentTypeEnum.Efectivo:
+                    time.sleep(self.pay_cash)
+                if self._clientGroupQueue[0].paymentType == PaymentTypeEnum.Transaccion:
+                    time.sleep(self.pay_bank)
+
                 self.totalPay()
                 self.popClientGroupQueue()
 

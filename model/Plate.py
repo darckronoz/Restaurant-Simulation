@@ -4,14 +4,15 @@ from model.PlateTypeEnum import PlateTypeEnum
 class Plate:
 
     def __init__(self, id_plate, plate_name, preparationTime, price, eating_time, plate_type):
+        self.cont = 0
+        self.score = 0
         self._id_plate = id_plate
         self._plate_name = plate_name
         self._eating_time = eating_time
-        self._score = 0
         self._price = price
         self._preparation_time = preparationTime
         self._plate_type = PlateTypeEnum(plate_type)
-        self._cont = 0
+        self.counter = 0
 
     def _get_eating_time(self):
         return self._eating_time
@@ -19,14 +20,14 @@ class Plate:
     def _get_name(self):
         return self._plate_name
 
-    def _add_score(self, score):
-        self._cont += 1
-        self._score += score
+    def add_score(self, score):
+        self.cont += 1
+        self.score += score
 
-    def _get_score(self):
-        if self._cont == 0:
-            self._cont += 1
-        return self._score / self._cont
+    def get_score(self):
+        if self.cont == 0:
+            self.cont += 1
+        return self.score / self.cont
 
     def _get_price(self):
         return self._price
@@ -45,7 +46,6 @@ class Plate:
 
     eatingTime = property(fget=_get_eating_time)
     name = property(fget=_get_name)
-    score = property(fget=_get_score, fset=_add_score)
     price = property(fget=_get_price)
     preparationTime = property(fget=_get_preparation_time)
     plateType = property(fget=_get_plate_type)
